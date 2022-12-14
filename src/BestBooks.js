@@ -21,14 +21,16 @@ class BestBooks extends React.Component {
     this.setState({ showAddModal: false })
   }
 
-  // handelAddModal = e => {
-  //   e.preventDefault()
-  //   const addResult = {
-  //     title: e.target.title.value,
-  //     description: e.target.description.value,
-  //     status: e.target.status.value
-  //   }
-  // }
+  handelAddModal = async (book) => {
+   console.log(book);
+    const addResult = await axios.post(process.env.REACT_APP_SERVER_URL +"/books", {
+      title: book.title,
+      description: book.description,
+      status: book.status
+    })
+
+    this.setState({books:[...this.state.books, addResult.data]})
+  }
 
   componentDidMount = () => {
     this.fetchBooks()
@@ -37,8 +39,6 @@ class BestBooks extends React.Component {
     this.setState({ search: event.target.value })
   }
   fetchBooks = async bookTitle => {
-    console.log('fetching book')
-    console.log(bookTitle)
     let request = {
       method: 'GET',
       url: `${process.env.REACT_APP_SERVER_URL}/books`
@@ -47,13 +47,11 @@ class BestBooks extends React.Component {
       request.url += `?title=${bookTitle}`
     }
     let response = await axios(request)
-    console.log(response)
     this.setState({
       books: response.data
     })
   }
 
-  /* TODO: Make a GET request to your API to fetch all the books from the database  */
 
   handleAddBook = () => {}
 
@@ -69,7 +67,7 @@ class BestBooks extends React.Component {
         <AddBook
           show={this.state.showAddModal}
           hideModal={this.hideModal}
-          // handelAddModal={this.handelAddModal}
+          handelAddModal={this.handelAddModal}
         />
 
         <button onClick={this.showModal}>Add a book</button>

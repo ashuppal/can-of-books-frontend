@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Carousel from 'react-bootstrap/Carousel';
+import Carousel from 'react-bootstrap/Carousel'
 import AddBook from './AddBook'
 
 class BestBooks extends React.Component {
@@ -13,7 +13,7 @@ class BestBooks extends React.Component {
       showAddModal: false
     }
   }
-  handleDisplayModal = () => {
+  showModal = () => {
     this.setState({ showAddModal: true })
   }
 
@@ -58,53 +58,60 @@ class BestBooks extends React.Component {
   handleAddBook = () => {}
 
   render () {
-    console.log(this.state)
-
-    /* TODO: render all the books in a Carousel */
 
     return (
       <>
-      <input onChange={this.handleChange} type='text' />
+        <input onChange={this.handleChange} type='text' />
         <button onClick={() => this.fetchBooks(this.state.search)}>
           Search
         </button>
-        {this.state.showAddModal && (
-          <>
-            <AddBook
-              show={this.state.showAddModal}
-              hideModal={this.hideModal}
-              handelAddModal={this.handelAddModal}
-            />
-          </>
-        )}
-        <button onClick={this.handleDisplayModal}>Add a book</button>
 
-        
+        <AddBook
+          show={this.state.showAddModal}
+          hideModal={this.hideModal}
+          // handelAddModal={this.handelAddModal}
+        />
+
+        <button onClick={this.showModal}>Add a book</button>
+<div class="carousel slide mx-auto" style={{ height: '55%', width: '60%'}}>
         {this.state.books.length
-          ? this.state.books.map(book => {
+          ? <Carousel showBooks = {this.state.books.length}>
+          {this.state.books.map(book => {
               return (
-                
-                <div style={{ height: '50%', width: '100%' }}>
-                  <Carousel>
-                    <img
-                      className='d-block w-100'
-                      src='https://via.placeholder.com/800x400'
-                      alt={book.title}
-                    />
-                    <Carousel.Item>
+                 
+                    <Carousel.Item interval ={3000}>
+                    <div>
+                      <img
+                        className='d-block w-100'
+                        src='https://images.unsplash.com/photo-1568301956237-25a54f5f0d21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80'
+                        alt={book.title}
+                        class='img-fluid'
+                      />
+                   </div>
+                    <Carousel.Caption>
                       <h3>{book.title}</h3>
                       <p>{book.description}</p>
                       <p>{book.status}</p>
+                    </Carousel.Caption>
                     </Carousel.Item>
-                  </Carousel>
                  
-                </div>
-              )
-            })
-          : null}
+                
+              );
+               
+            })}
+            
+            </Carousel> 
+            
+          : <p>There are no books</p>}
+          </div>
       </>
+      
     )
+    
   }
+
+  
 }
+        
 
 export default BestBooks

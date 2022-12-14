@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
+import React, { Component } from 'react'
+import { Modal, Form, Button } from 'react-bootstrap'
 
 export class AddBook extends Component {
-  render() {
+  render () {
     return (
       <div>
         <Modal show={this.props.show} onHide={this.props.hideModal}>
@@ -32,19 +32,20 @@ export class AddBook extends Component {
                   placeholder='Enter the status'
                 />
               </Form.Group>
-            
+
+              <Button onClick={this.props.hideModal}>Close</Button>
               <Button
-                onClick={this.props.hideModal}
-              >
-                Close
+                style={{ marginLeft: 10 }}
+                variant='primary'
+                /*type='submit'*/>
+                Add your book!
               </Button>
-             
             </Form>
           </Modal.Body>
         </Modal>
       </div>
-    );
+    )
   }
 }
 
-export default AddBook;
+export default AddBook

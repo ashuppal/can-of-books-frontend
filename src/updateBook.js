@@ -23,9 +23,10 @@ class UpdateBook extends React.Component {
   }
 
   handleSubmit = e => {
+    console.log("submitting the form")
     e.preventDefault()
     this.props.handleUpdate(this.state)
-    this.props.closeModal()
+    this.props.hideUpdateModal()
   }
 
   render () {

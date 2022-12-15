@@ -57,14 +57,14 @@ class BestBooks extends React.Component {
   updateRequest = async (book) => {
     // make our request
     console.log(book);
-    let response = await axios.put(process.env.REACT_APP_SERVER_URL + `/cats/${book._id}`, {
+    let response = await axios.put(process.env.REACT_APP_SERVER_URL + `/books/${book._id}`, {
       title: book.title,
       description: book.description,
       status: book.status,
     
     });
     let updatedBook = response.data;
-    console.log(this.state.cats, updatedBook);
+    console.log(this.state.books, updatedBook);
     // set our components state with our updated cat.
     // this.setState({ cats: this.state.cats.map(cat => {
     //   if (cat._id === updatedCat._id) {
@@ -74,7 +74,7 @@ class BestBooks extends React.Component {
     //   }
     // })
     // });
-    this.fetchCats();
+    this.fetchBooks();
   }
 
   componentDidMount = () => {

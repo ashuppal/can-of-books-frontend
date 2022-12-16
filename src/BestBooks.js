@@ -5,8 +5,27 @@ import Carousel from 'react-bootstrap/Carousel'
 import AddBook from './AddBook'
 import Button from 'react-bootstrap/Button';
 import UpdateBook from './updateBook'
+import AuthButtons from './auth/AuthButtons'
+import { withAuth0 } from '@auth0/auth0-react';
 
 class BestBooks extends React.Component {
+
+  request = async () => {
+    let res = await this.props.auth0.getIdTokenClaims();
+    let token = res.__raw;
+    console.log(token);
+let request = {
+      method: 'GET',
+      url: 'http://localhost:3001/books',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }    
+  }
+
+    let response = await axios(request);
+    console.log(response.data);
+  }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -100,7 +119,9 @@ class BestBooks extends React.Component {
   handleAddBook = () => {}
 
   render () {
-    console.log(this.state)
+    // console.log(this.state)
+    let auth0 = this.props.auth0;
+    console.log(auth0);
     return (
       <>
         <input onChange={this.handleChange} type='text' />
@@ -162,6 +183,8 @@ class BestBooks extends React.Component {
             />
           : null
         }
+        <AuthButtons />
+        {auth0.isAuthenticated ? <button onClick={this.request}> Make request</button>:null}
       </div>
   
       </>
@@ -169,4 +192,4 @@ class BestBooks extends React.Component {
   }
 }
 
-export default BestBooks
+export default withAuth0(BestBooks);
